@@ -1,20 +1,17 @@
 package com.mirta.testing.general.steps;
 
-import com.codeborne.selenide.ClickOptions;
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
 import com.mirta.testing.general.pages.*;
 import io.qameta.allure.Step;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.Keys;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.zip.ZipFile;
 
-import static com.codeborne.selenide.Selenide.actions;
-
-public class FolderSteps{
-
+public class FolderSteps {
 
 
   AllFilesPage allFilesPage = new AllFilesPage();
@@ -25,6 +22,7 @@ public class FolderSteps{
   CommonSteps commonSteps = new CommonSteps();
   LeftSidebar leftSidebar = new LeftSidebar();
   TrashPage trashPage = new TrashPage();
+  ActionIcons actionIcons = new ActionIcons();
 
   @Step("Шаг - создание папки")
   public void create(String newFolderName) {
@@ -36,7 +34,8 @@ public class FolderSteps{
 
   @Step("Шаг - вход в папку")
   public void enter(String folderName) {
-    allFilesPage.item(folderName).doubleClick();
+    allFilesPage.spinner.waitUntil(Condition.not(Condition.visible), 600000);
+    allFilesPage.item(folderName).shouldBe(Condition.visible).doubleClick();
     allFilesPage.spinner.waitUntil(Condition.not(Condition.visible), 600000);
     allFilesPage.openedFolder(folderName).shouldBe(Condition.visible);
 
@@ -61,15 +60,17 @@ public class FolderSteps{
   @Step("Шаг - выход из папки наверх")
   public void goFolderUp() {
     allFilesPage.goFolderUp.click();
-    allFilesPage.spinner.shouldBe(Condition.not(Condition.visible));
+    allFilesPage.spinner.waitUntil(Condition.not(Condition.visible), 600000);
   }
 
 
-   @Step("Шаг - создание публикации")
+  @Step("Шаг - создание публикации")
   public void share(String usernameReceiver) throws InterruptedException {
     allFilesPage.initShareButton.click();
-    shareModal.userShareInput.setValue(usernameReceiver);
+    shareModal.userShareInput.shouldBe(Condition.visible);
     Thread.sleep(400);
+    shareModal.userShareInput.setValue(usernameReceiver);
+    Thread.sleep(1000);
     shareModal.addUserShareButton.click();
     shareModal.openSharePermits(usernameReceiver).click();
 
@@ -90,6 +91,8 @@ public class FolderSteps{
 
     shareModal.setAccessPassword.setSelected(false);
     shareModal.submitShareButton.click();
+    allFilesPage.spinner.waitUntil(Condition.visible, 10000);
+    allFilesPage.spinner.waitUntil(Condition.not(Condition.visible), 600000);
     toasts.shareSuccess.shouldBe(Condition.visible);
     toasts.toastCloser.click();
 
@@ -106,7 +109,7 @@ public class FolderSteps{
     allFilesPage.renameInput.sendKeys(Keys.BACK_SPACE);
     allFilesPage.renameInput.setValue(newItemName);
     allFilesPage.confirmRenameButton.click();
-    allFilesPage.spinner.shouldBe(Condition.not(Condition.visible));
+    allFilesPage.spinner.waitUntil(Condition.not(Condition.visible), 600000);
     allFilesPage.item(newItemName).shouldBe((Condition.visible));
   }
 
@@ -118,7 +121,7 @@ public class FolderSteps{
     if (commonSteps.isItemPresent(allFilesPage.confirmDeleteButton)) {
       allFilesPage.confirmDeleteButton.click();
     }
-    allFilesPage.spinner.shouldBe(Condition.not(Condition.visible));
+    allFilesPage.spinner.waitUntil(Condition.not(Condition.visible), 600000);
     allFilesPage.item(itemName).shouldBe(Condition.not(Condition.visible));
 
   }
@@ -129,9 +132,9 @@ public class FolderSteps{
     leftSidebar.trashButton.click();
     commonSteps.selectByCheckbox(itemName);
     trashPage.restoreButton.click();
-    allFilesPage.spinner.shouldBe(Condition.not(Condition.visible));
+    allFilesPage.spinner.waitUntil(Condition.not(Condition.visible), 600000);
     leftSidebar.allFilesButton.click();
-    allFilesPage.spinner.shouldBe(Condition.not(Condition.visible));
+    allFilesPage.spinner.waitUntil(Condition.not(Condition.visible), 600000);
 
   }
 
@@ -154,6 +157,35 @@ public class FolderSteps{
     }
   }
 
+  @Step("Шаг - скачивание файла через контекстное меню")
+  public void downloadFileViaContextMenu(String fileName) throws FileNotFoundException, InterruptedException {
+    commonSteps.rightClick(fileName);
+    File docxTextFileDownloaded = contextMenu.downloadFolderAsArchive.download();
+    System.out.println("Downloaded FILE Path: " + docxTextFileDownloaded.getPath());
+  }
+
+  @Step("Шаг - скачивание файла через иконку")
+   public void downloadFileViaActionIcon(String fileName) throws FileNotFoundException {
+    File docxTextFileDownloaded = actionIcons.downloadOriginalFileIcon(fileName).download();
+    System.out.println("Downloaded FILE Path: " + docxTextFileDownloaded.getPath());
+  }
+
+  @Step("Шаг - скачивание папки через контекстное меню")
+  public void downloadFolderViaContextMenu(String folderName) throws FileNotFoundException, InterruptedException {
+    commonSteps.rightClick(folderName);
+    File zip = contextMenu.downloadFolderAsArchive.download();
+    System.out.println("Downloaded ZIP Path: " + zip.getPath());
+    Thread.sleep(5000);
+    Assertions.assertTrue(FolderSteps.isZipValid(zip));
+  }
+
+  @Step("Шаг - скачивание папки через иконку")
+    public void downloadFolderViaActionIcon(String folderName) throws FileNotFoundException, InterruptedException {
+    File zip = actionIcons.downloadFolderIcon(folderName).download();
+    System.out.println("Downloaded ZIP Path: " + zip.getPath());
+    Thread.sleep(20000);
+    Assertions.assertTrue(FolderSteps.isZipValid(zip));
+  }
 
 
 

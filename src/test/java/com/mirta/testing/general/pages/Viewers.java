@@ -12,13 +12,18 @@ public class Viewers {
 
   public SelenideElement
 
-          xlsxViewer = $x("//div[@class='x-spreadsheet-overlayer']"),
-          xlsxViewerCloser = $x("//div[@class='modal-header']/..//span[text()='×']");
+          fileOpenedInTableViewer = $x("//div[@class='x-spreadsheet-overlayer']"),
+          fileDocumentLoaderInPdfViewer = $x("//div[@id='loadingDiv']"),
+          filePageLoaderInPdfViewer = $x("//div[@class='loadingIcon']"),
+          fileOpenedInPdfViewer = $("canvas[id='page1']"),
+
+
+          viewersCloser = $x("//div[@class='modal-header']/..//span[text()='×']");
 
 
 
 
-  public SelenideElement xlsxViewerFileNameInHeader(String fileName) {
+  public SelenideElement viewersFileNameInHeader(String fileName) {
     return  $x(String.format("//div[@class='modal-header']//div[contains(text(), '%s')]", fileName));
   }
 

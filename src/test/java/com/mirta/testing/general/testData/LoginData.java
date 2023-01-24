@@ -8,7 +8,7 @@ public class LoginData {
   public static String username = "qa@localhost.ru";
   public static String password = "!changeMe1";
 
-  public static String usernameReceiver = "07@localhost.ru";
+  public static String usernameReceiver = "qa02@localhost.ru";
   public static String passwordReceiver = "!changeMe1";
 
 }

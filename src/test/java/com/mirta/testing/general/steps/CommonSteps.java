@@ -32,6 +32,7 @@ public class CommonSteps {
 
 
     Selenide.open("https://quality.vaulterix.ru/login");
+//    Selenide.open("https://vdr.vaulterix.ru/login");
   }
 
 
@@ -49,8 +50,10 @@ public class CommonSteps {
   }
 
 
-  public void rightClick(String itemName) {
+  public void rightClick(String itemName) throws InterruptedException {
+    allFilesPage.item(itemName).hover();
     actions().contextClick(allFilesPage.item(itemName)).build().perform();
+    Thread.sleep(1000);
   }
 
 

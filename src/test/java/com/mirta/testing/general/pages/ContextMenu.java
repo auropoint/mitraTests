@@ -10,9 +10,10 @@ public class ContextMenu {
 
   public SelenideElement
 
-          viewAsXlsx = $x("//div[@class='react-contexify__item'][2]"),
-          downloadFolderAsArchive = $x("//div[@class='react-contexify__item'][2]"),
-          rename = $x("//div[@class='react-contexify__item'][5]");
+          viewAsXlsx = $x("//div[@class='react-contexify__item']//*[text()='View as XLSX']"),
+          viewAsPdf = $x("//div[@class='react-contexify__item']//*[text()='Open']"),
+          downloadFolderAsArchive = $x("//div[@class='react-contexify__item']//*[text()='Download folder as archive']"),
+          rename = $x("//div[@class='react-contexify__item']//*[text()='Rename']");
 
 
 

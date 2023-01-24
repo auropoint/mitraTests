@@ -8,12 +8,18 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class AllFilesPage {
 
-  private String folderName;
 
   public SelenideElement
 
-          //folder creation
-          initFolderCreationButton = $x("//div[contains(@class, 'text-right col')]/button[3]"),
+          userProfileInfo = $x("//div[@class='user-info']"),
+
+
+  // Internal user
+
+  //folder creation
+
+
+  initFolderCreationButton = $x("//div[contains(@class, 'text-right col')]/button[3]"),
           newFolderNameInput = $(By.name("folderName")),
           submitFolderCreationButton = $x("//div[contains(@class, 'modal-footer')]/button[2]"),
           uploadFileInput = $x("//input[contains(@class, 'input-file')][2]"),
@@ -25,7 +31,7 @@ public class AllFilesPage {
           spinner = $x("//div[@class='spinner-border text-primary']"),
 
   // rename modal
-          renameInput = $x("//input[@name='folderName']"),
+  renameInput = $x("//input[@name='folderName']"),
           confirmRenameButton = $x("(//button[@class='btn btn-primary'])[2]"),
 
 
@@ -33,8 +39,13 @@ public class AllFilesPage {
   waitingUploadStartClockIcon = $x("//a[@class='text-decoration-none icon icon-ext-clock']");
 
 
+  // External user
+
+
+
+
   public SelenideElement item(String itemName) {
-    return $x(String.format("//div[text()='%s']", itemName));
+    return $x(String.format("//*[text()='%s']", itemName));
   }
 
   public SelenideElement itemSelctedCheckbox(String itemName) {
@@ -42,9 +53,8 @@ public class AllFilesPage {
   }
 
   public SelenideElement openedFolder(String folderName) {
-    return $x(String.format("//li[text()='%s']", folderName));
+    return $x(String.format("//*[text()='%s']", folderName));
   }
-
 
 
 }
