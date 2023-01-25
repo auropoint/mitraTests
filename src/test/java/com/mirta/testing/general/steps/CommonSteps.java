@@ -31,8 +31,8 @@ public class CommonSteps {
     }
 
 
-    Selenide.open("https://quality.vaulterix.ru/login");
-//    Selenide.open("https://vdr.vaulterix.ru/login");
+//    Selenide.open("https://quality.vaulterix.ru/login");
+    Selenide.open("https://vdr.vaulterix.ru/login");
   }
 
 

@@ -48,59 +48,59 @@ public class InternalUserTests extends FrameworkConfigurator {
 
     folderSteps.goFolderUp();
 
-//    // share folder with a new external user
-//    String externalUserEmail = emailSteps.getNewEmailAddress("external_" + folderId);
-//    commonSteps.selectByCheckbox(initialTestFolderName);
-//    folderSteps.share(externalUserEmail);
-//    System.out.println("ExternalUserEmail : " + externalUserEmail);
+    // share folder with a new external user
+    String externalUserEmail = emailSteps.getNewEmailAddress("external_" + folderId);
+    commonSteps.selectByCheckbox(initialTestFolderName);
+    shareSteps.share(externalUserEmail);
+    System.out.println("ExternalUserEmail : " + externalUserEmail);
 
     // rename folder
     String testFolderName = initialTestFolderName + "_reamed";
     folderSteps.rename(initialTestFolderName, testFolderName);
 
-//    // share folder with internal user
-//    commonSteps.selectByCheckbox(testFolderName);
-//    folderSteps.share(LoginData.usernameReceiver);
-//
-//    // share folder with an existing external user
-//    commonSteps.selectByCheckbox(testFolderName);
-//    folderSteps.share("bogdanovich@mitrasoft.ru");
+    // share folder with internal user
+    commonSteps.selectByCheckbox(testFolderName);
+    shareSteps.share(LoginData.usernameReceiver);
 
-//    folderSteps.enter(testFolderName);
-//
-//    // download file
-//    folderSteps.downloadFileViaContextMenu(docxTextFile.getName());
-//
-//    folderSteps.goFolderUp();
+    // share folder with an existing external user
+    commonSteps.selectByCheckbox(testFolderName);
+    shareSteps.share("bogdanovich@mitrasoft.ru");
 
-//    // download folder
-//    folderSteps.downloadFolderViaContextMenu(testFolderName);
+    folderSteps.enter(testFolderName);
+
+    // download file
+    folderSteps.downloadFileViaContextMenu(docxTextFile.getName());
+
+    folderSteps.goFolderUp();
+
+    // download folder
+    folderSteps.downloadFolderViaContextMenu(testFolderName);
 
 
     folderSteps.enter(testFolderName);
     folderSteps.enter(folder.getName());
 
     // download file as PDF - with or without password
+//    folderSteps.downloadFolderViaContextMenu(testFolderName);
 
 
 
 
 
-    Thread.sleep(10000000);
 
-//    //view files
-//    viewerSteps.viewAsTableViaContextMenu("B_1.xlsx");
-//    viewerSteps.viewAsPdfViaContextMenu("pdf_1.pdf");
-//    viewerSteps.viewAsPdfViaContextMenu("word_1.docx");
-//    viewerSteps.viewAsPdfViaContextMenu("notepad_1.txt");
-//    viewerSteps.viewAsPdfViaContextMenu("B_1.xlsx");
+    //view files
+    viewerSteps.viewAsTableViaContextMenu("B_1.xlsx");
+    viewerSteps.viewAsPdfViaContextMenu("pdf_1.pdf");
+    viewerSteps.viewAsPdfViaContextMenu("word_1.docx");
+    viewerSteps.viewAsPdfViaContextMenu("notepad_1.txt");
+    viewerSteps.viewAsPdfViaContextMenu("B_1.xlsx");
 
-//    //delete XLSX
-//    folderSteps.delete("B_1.xlsx");
-//
-//    //recover XLSX
-//    folderSteps.recover("B_1.xlsx");
-//    allFilesPage.item("B_1" + "_restored(1)" + ".xlsx").shouldBe(Condition.visible);
+    //delete XLSX
+    folderSteps.delete("B_1.xlsx");
+
+    //recover XLSX
+    folderSteps.recover("B_1.xlsx");
+    allFilesPage.item("B_1" + "_restored(1)" + ".xlsx").shouldBe(Condition.visible);
 
     //logout
     loginSteps.logout();
@@ -108,27 +108,27 @@ public class InternalUserTests extends FrameworkConfigurator {
 
 
 
-//    // External user
-//
-//    loginSteps.loginExternalUserWithEmailAndOtp(emailSteps, externalUserEmail);
-//    allFilesPage.item(docxTextFile.getName()).shouldBe(Condition.visible);
-//    allFilesPage.item(folder.getName()).shouldBe(Condition.visible);
-//
-//    // download file
-//    folderSteps.downloadFileViaActionIcon(docxTextFile.getName());
-//
-//    // download folder
-//    folderSteps.downloadFolderViaActionIcon(folder.getName());
-//
-//
-//
-//    //view files
-//    folderSteps.enter(folder.getName());
-//    viewerSteps.viewAsTableViaActionIcon("B_1.xlsx");
-//    viewerSteps.viewAsPdfViaActionIcon("pdf_1.pdf");
-//    viewerSteps.viewAsPdfViaActionIcon("word_1.docx");
-//    viewerSteps.viewAsPdfViaActionIcon("notepad_1.txt");
-//    viewerSteps.viewAsPdfViaActionIcon("B_1.xlsx");
+    // External user
+
+    loginSteps.loginExternalUserWithEmailAndOtp(emailSteps, externalUserEmail);
+    allFilesPage.item(docxTextFile.getName()).shouldBe(Condition.visible);
+    allFilesPage.item(folder.getName()).shouldBe(Condition.visible);
+
+    // download file
+    folderSteps.downloadFileViaActionIcon(docxTextFile.getName());
+
+    // download folder
+    folderSteps.downloadFolderViaActionIcon(folder.getName());
+
+
+
+    //view files
+    folderSteps.enter(folder.getName());
+    viewerSteps.viewAsTableViaActionIcon("B_1_restored(1).xlsx");
+    viewerSteps.viewAsPdfViaActionIcon("pdf_1.pdf");
+    viewerSteps.viewAsPdfViaActionIcon("word_1.docx");
+    viewerSteps.viewAsPdfViaActionIcon("notepad_1.txt");
+    viewerSteps.viewAsPdfViaActionIcon("B_1_restored(1).xlsx");
 
 
 
@@ -177,5 +177,6 @@ public class InternalUserTests extends FrameworkConfigurator {
   LeftSidebar leftSidebar = new LeftSidebar();
   EmailSteps emailSteps = new EmailSteps();
   ViewerSteps viewerSteps = new ViewerSteps();
+  ShareSteps shareSteps = new ShareSteps();
 
 }

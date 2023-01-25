@@ -12,7 +12,7 @@ public class ContextMenu {
 
           viewAsXlsx = $x("//div[@class='react-contexify__item']//*[text()='View as XLSX']"),
           viewAsPdf = $x("//div[@class='react-contexify__item']//*[text()='Open']"),
-          downloadFolderAsArchive = $x("//div[@class='react-contexify__item']//*[text()='Download folder as archive']"),
+          downloadFileOrFolderAsArchive = $x("//div[@class='react-contexify__item']//*[contains(text(), 'Download')]"),
           rename = $x("//div[@class='react-contexify__item']//*[text()='Rename']");
 
 
